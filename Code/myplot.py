@@ -22,7 +22,7 @@ def plot_polys(data_rep, vertices):
 
     for i in range(num_clusters):
         line = plt.Polygon(vertices[i], closed = False, color="blue", alpha=0.3)
-        ax.add_line(line)
+        ax.add_patch(line)
 
     plt.scatter(data_rep[:, 0], data_rep[:, 1])
 

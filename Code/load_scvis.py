@@ -1,12 +1,25 @@
 
+import os
+
+os.environ.setdefault("CUDA_VISIBLE_DEVICES", "-1")
+os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "3")
+
 import numpy as np
 import pandas as pd
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import yaml
 
 import sys
-sys.path.insert(0, "/home/gregory/Desktop/ELDR/scvis/lib/scvis/")
-from vae import GaussianVAE
+from pathlib import Path
+
+ELDR_ROOT = Path(__file__).resolve().parents[1]
+SCVIS_LIB = ELDR_ROOT / "scvis" / "lib"
+SCVIS_CONFIG = SCVIS_LIB / "scvis" / "config" / "model_config.yaml"
+
+sys.path.insert(0, str(SCVIS_LIB))
+from scvis.vae import GaussianVAE
+
+tf.disable_v2_behavior()
 
 def load_vae(input_dim, model_file, feature_transform = None):
 
@@ -14,9 +27,8 @@ def load_vae(input_dim, model_file, feature_transform = None):
     
     # Model Configuration
     try:
-        config_file_yaml = open("/home/gregory/Desktop/ELDR/scvis/lib/scvis/config/model_config.yaml", "r")
-        config = yaml.load(config_file_yaml, Loader = yaml.FullLoader)
-        config_file_yaml.close()
+        with open(SCVIS_CONFIG, "r") as config_file_yaml:
+            config = yaml.load(config_file_yaml, Loader = yaml.FullLoader)
     except yaml.YAMLError as exc:
         print("Error in the configuration file: {}".format(exc))
 
