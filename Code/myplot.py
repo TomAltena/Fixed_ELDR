@@ -1,4 +1,3 @@
-
 import matplotlib
 matplotlib.rc("xtick", labelsize = 24)
 matplotlib.rc("ytick", labelsize = 24)
@@ -103,14 +102,14 @@ def plot_metrics(a, b, name = "plot_metrics.png", fontsize = 55, labelsize = 40)
 
     # Colorbar
     ax.cax.colorbar(im)
-    ax.cax.toggle_label(True)
+    ax.cax.axis["right"].toggle(ticklabels=True, label=True)
     ax.cax.tick_params(labelsize = labelsize)
 
     plt.savefig(name)
     plt.show()
     plt.close()
 
-def plot_explanation(load_model, x, data_rep, indices, deltas, a, b, c1, c2,  k = None, num_points = 50, name = "plot_explanation.png", feature_names = None):
+def plot_explanation(load_model, x, data_rep, indices, deltas, a, b, c1, c2, k = None, num_points = 50, name = "plot_explanation.png", feature_names = None):
 
     # Find the explanation from c1 to c2
     if c1 == 0:
@@ -191,13 +190,13 @@ def plot_change(deltas, deltas_original, name = "plot_similarity.png", feature_n
     plt.figure(figsize=(20, 10))
     
     plt.ylabel("Basis Explanation")
-    plt.yticks(np.arange(0, num_clusters + 1, dtype=np.int), labels = 1 + np.arange(0, num_clusters + 1, dtype=np.int))
+    plt.yticks(np.arange(0, num_clusters, dtype=int), labels = 1 + np.arange(0, num_clusters, dtype=int))
     if feature_names is None:
         plt.xlabel("Feature Index")
-        plt.xticks(np.arange(0, deltas.shape[1] + 1, dtype=np.int))
+        plt.xticks(np.arange(0, deltas.shape[1], dtype=int))
     else:
         plt.xlabel("Feature")
-        plt.xticks(np.arange(0, deltas.shape[1] + 1, dtype=np.int), feature_names, rotation=90, fontsize = 40)
+        plt.xticks(np.arange(0, deltas.shape[1], dtype=int), feature_names, rotation=90, fontsize = 40)
     
     plt.title("Change in Explanation (Normalized)")
     
