@@ -3,7 +3,7 @@
 */.ipynb_checkpoints/*.ipynb
 *.Rdata
 *._*
-
+*.idea
 /Bipolar/explanation/*
 /Bipolar-K/explanation/*
 
